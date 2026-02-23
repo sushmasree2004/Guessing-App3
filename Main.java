@@ -1,14 +1,14 @@
 /*
 
-Guessing APP -Use Case 1 : Game Initialization
+Guessing APP -Use Case 2 : User Guess Submission
 
 
-Thiss class acts as the apllication Entry point
-It intializes the game configuration and display rules
-No user input or game Play logic is implemented
+Thiss class is responsible for comparing 
+the users Guess with target number
+It doesnt handle input or output
 
 @author : B.Sushma Sree
-@version: 1
+@version: 2
 
 */
 
@@ -20,5 +20,32 @@ public class Main
 	   System.out.println("Welcome To GUESSING APP ");
 	   GameConfig game=new GameConfig();
 	   game.showRules();
+	   
+	   
+	   
+	   Scanner sc = new Scanner(System.in);
+	   int attempts=0;
+	   
+	   while(attempts<game.getMax_Attempts())
+	   {
+		   
+		   System.out.print("Enter Your Guess : ");
+		   int guess=sc.nextInt();
+		   attempts++;
+		   
+		   
+		   
+		   String result=GuessValidator.validateGuess(guess,game.getTargetNumber());
+		   System.out.println(result);
+		   
+		   
+		   
+		   if(" CORRECT ".equals(result))
+		   {
+			   break;
+			   
+		   }
+	   }
    }
 }
+
