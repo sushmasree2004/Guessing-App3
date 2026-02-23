@@ -1,14 +1,14 @@
 /*
 
-Guessing APP -Use Case 2 : User Guess Submission
+Guessing APP -Use Case 3 : Hint Generation
 
 
-Thiss class is responsible for comparing 
-the users Guess with target number
-It doesnt handle input or output
+Thiss class is responsible for generating Hints 
+based on number OF INCORRECT Attempts by player
+Hints provide partial Information 
 
 @author : B.Sushma Sree
-@version: 2
+@version: 3
 
 */
 
@@ -45,7 +45,14 @@ public class Main
 			   break;
 			   
 		   }
+		   if(!" CORRECT ".equals(result)) 
+		   {
+               if(attempts <= game.getMax_Hints())
+		       {
+                  System.out.println(HintService.generateHint(game.getTargetNumber(), attempts));
+              }
+           }
+
 	   }
    }
 }
-
