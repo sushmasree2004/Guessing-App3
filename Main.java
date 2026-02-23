@@ -1,58 +1,56 @@
 /*
 
-Guessing APP -Use Case 3 : Hint Generation
+Guessing APP -Use Case 4 : Error Handling AND Validation 
 
 
-Thiss class is responsible for generating Hints 
-based on number OF INCORRECT Attempts by player
-Hints provide partial Information 
+Handles validation of user input
+before it is used in logic
+
+Custom exception used when user input fails validation
+All input checks are centralized
 
 @author : B.Sushma Sree
-@version: 3
+@version: 4
 
 */
 
-import java.util.*;
+import java.util.Scanner;
+
 public class Main 
 {
-   public static void main(String args[])
-   {
-	   System.out.println("Welcome To GUESSING APP ");
-	   GameConfig game=new GameConfig();
-	   game.showRules();
-	   
-	   
-	   
-	   Scanner sc = new Scanner(System.in);
-	   int attempts=0;
-	   
-	   while(attempts<game.getMax_Attempts())
-	   {
-		   
-		   System.out.print("Enter Your Guess : ");
-		   int guess=sc.nextInt();
-		   attempts++;
-		   
-		   
-		   
-		   String result=GuessValidator.validateGuess(guess,game.getTargetNumber());
-		   System.out.println(result);
-		   
-		   
-		   
-		   if(" CORRECT ".equals(result))
-		   {
-			   break;
-			   
-		   }
-		   if(!" CORRECT ".equals(result)) 
-		   {
-               if(attempts <= game.getMax_Hints())
-		       {
-                  System.out.println(HintService.generateHint(game.getTargetNumber(), attempts));
-              }
-           }
+    public static void main(String args[]) throws InvalidInputException 
+    {
+        System.out.println("Welcome To GUESSING APP ");
 
-	   }
-   }
+        GameConfig game = new GameConfig();
+        game.showRules();
+
+        Scanner sc = new Scanner(System.in);
+        int attempts = 0;
+
+        while (attempts < game.getMax_Attempts()) 
+        {
+            System.out.print("Enter Your Guess : ");
+
+            int guess = ValidationService.validateInput(sc.nextLine());
+            attempts++;
+
+            String result = GuessValidator.validateGuess(guess, game.getTargetNumber());
+            System.out.println(result);
+
+            if (" CORRECT ".equals(result)) 
+            {
+                break;
+            }
+
+            if (!" CORRECT ".equals(result)) 
+            {
+                if (attempts <= game.getMax_Hints()) 
+                {
+                    System.out.println(HintService.generateHint(game.getTargetNumber(), attempts));
+                }
+            }
+        }
+
+    }
 }
